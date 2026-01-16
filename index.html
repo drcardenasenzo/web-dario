@@ -146,16 +146,21 @@
         .swiper-slide {
             text-align: center;
             font-size: 18px;
-            background: #f3f4f6; 
+            /* CAMBIO: Fondo blanco puro para que se fusione con la imagen del producto */
+            background: #ffffff; 
             display: flex;
             justify-content: center;
             align-items: center;
+            /* CAMBIO: Evita glitches visuales en bordes */
+            overflow: hidden;
         }
         .swiper-slide img {
             display: block;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            /* CAMBIO: object-contain para ver toda la imagen, sin padding para que sea grande */
+            object-fit: contain;
+            padding: 0;
         }
         .swiper-pagination-bullet-active {
             background-color: #5CAB7D !important;
@@ -328,7 +333,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-500 text-xs md:text-sm">
-                &copy; 2024 VitalCore. Todos los derechos reservados.
+                &copy; 2026 VitalCore. Todos los derechos reservados.
             </div>
         </div>
     </footer>
@@ -351,14 +356,6 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Inicializar AOS
-        AOS.init({
-            duration: 800, 
-            once: true,   
-            offset: 100,  
-            easing: 'ease-out-cubic'
-        });
-
         // 1. DATA
         const products = [
             { id: 1, brand: "Star Nutrition", name: "Nitro Whey", price: "53.900", description: "Blend de máxima pureza y rápida absorción. La fórmula definitiva para potenciar tu recuperación y crecimiento magro.", category: "Proteínas" },
@@ -404,7 +401,7 @@
 
                 // ESTRUCTURA SWIPER (CARRUSEL)
                 card.innerHTML = `
-                    <div class="relative group h-64 overflow-hidden bg-gray-100">
+                    <div class="relative group h-64 overflow-hidden bg-white">
                         <span class="absolute top-3 left-3 bg-brand-dark text-brand-primary text-[10px] md:text-xs font-bold px-3 py-1 rounded-full z-10 uppercase tracking-wide pointer-events-none">
                             ${product.brand}
                         </span>
@@ -418,7 +415,7 @@
                                         src="${image1}" 
                                         onerror="this.onerror=null; this.src='${fallbackImage}';" 
                                         alt="${product.name} 1" 
-                                        class="w-full h-full object-cover object-center"
+                                        class="w-full h-full object-contain object-center"
                                     >
                                 </div>
                                 <!-- Slide 2 -->
@@ -427,7 +424,7 @@
                                         src="${image2}" 
                                         onerror="this.onerror=null; this.src='${fallbackImage}';" 
                                         alt="${product.name} 2" 
-                                        class="w-full h-full object-cover object-center"
+                                        class="w-full h-full object-contain object-center"
                                     >
                                 </div>
                             </div>
@@ -463,6 +460,11 @@
             
             // Inicializar los Swipers después de crear el HTML
             initSwipers(filtered);
+            
+            // Refrescar AOS para que reconozca los nuevos elementos
+            setTimeout(() => {
+                AOS.refresh();
+            }, 100);
         }
 
         // 3. INICIALIZAR SWIPERS
@@ -495,9 +497,6 @@
                 }
             });
             renderProducts(brand);
-            setTimeout(() => {
-                AOS.refresh();
-            }, 100);
         }
 
         // 5. LOGICA DE PEDIDO
@@ -541,6 +540,14 @@
         // Inicializar
         document.addEventListener('DOMContentLoaded', () => {
             renderProducts();
+            
+            // Inicializar AOS despues de renderizar
+            AOS.init({
+                duration: 800, 
+                once: true,   
+                offset: 100,  
+                easing: 'ease-out-cubic'
+            });
         });
 
     </script>
