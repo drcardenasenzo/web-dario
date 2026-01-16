@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VITALCORE - Suplementos Deportivos</title>
     
+    <!-- METADATOS PARA REDES SOCIALES (WhatsApp, Facebook, etc.) -->
+    <!-- Descripción general para buscadores -->
+    <meta name="description" content="Tienda online de suplementos deportivos. Distribuidores oficiales de Star Nutrition y Ena Sport. Encontrá proteínas, creatinas y aminoácidos al mejor precio con envíos rápidos.">
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="VITALCORE - Suplementos Deportivos">
+    <meta property="og:description" content="Potencia tu entrenamiento con suplementos de alta calidad. Proteínas, creatinas y más. Asesoramiento sin cargo y los mejores precios del mercado.">
+    <meta property="og:image" content="logo.jpg">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="VITALCORE - Suplementos Deportivos">
+    <meta property="twitter:description" content="Potencia tu entrenamiento con suplementos de alta calidad. Proteínas, creatinas y más.">
+    <meta property="twitter:image" content="logo.jpg">
+
     <!-- Icono de pestaña (Favicon) -->
     <link rel="icon" href="logo.jpg" type="image/jpg">
 
@@ -346,14 +361,11 @@
 
         // 1. DATA
         const products = [
-            { id: 1, brand: "Star Nutrition", name: "Nitro Whey", price: "53.900", description: "Proteína de suero de alta pureza. Ideal para recuperación post-entreno.", category: "Proteínas" },
-            { id: 2, brand: "Star Nutrition", name: "Whey Protein Platinum 2lb", price: "54.500", description: "Fórmula premium de proteína concentrada para máximo desarrollo muscular.", category: "Proteínas" },
-            { id: 3, brand: "Star Nutrition", name: "Whey Protein 2lb Doy Pack", price: "47.600", description: "La calidad de siempre en formato económico y ecológico.", category: "Proteínas" },
-            { id: 4, brand: "Star Nutrition", name: "Creatina Monohidratada 300g", price: "41.900", description: "Aumenta tu fuerza, potencia y resistencia muscular explosiva.", category: "Creatinas" },
-            { id: 5, brand: "Star Nutrition", name: "Creatina Doy Pack 300g", price: "37.200", description: "Recarga de energía ATP en formato repuesto económico.", category: "Creatinas" },
-            { id: 6, brand: "Star Nutrition", name: "Ami.Esenciales (EAA)", price: "43.200", description: "Aminoácidos esenciales para evitar el catabolismo y mejorar la síntesis proteica.", category: "Aminoácidos" },
-            { id: 7, brand: "Ena", name: "Pre War 400g", price: "30.500", description: "Pre-entreno explosivo. Energía, foco y bombeo para tus mejores sesiones.", category: "Pre-Workout" },
-            { id: 8, brand: "Ena", name: "Carbo Energy 540g", price: "15.000", description: "Complejo de carbohidratos para energía sostenida durante el ejercicio.", category: "Energía" }
+            { id: 1, brand: "Star Nutrition", name: "Nitro Whey", price: "53.900", description: "Blend de máxima pureza y rápida absorción. La fórmula definitiva para potenciar tu recuperación y crecimiento magro.", category: "Proteínas" },
+            { id: 2, brand: "Star Nutrition", name: "Whey Protein Platinum 2lb", price: "54.500", description: "Concentrado de suero 100% premium. Rica en BCAAs para un desarrollo muscular sólido y un sabor increíble.", category: "Proteínas" },
+            { id: 3, brand: "Star Nutrition", name: "Whey Protein 2lb Doy Pack", price: "47.600", description: "La calidad Platinum en formato refill. Misma potencia muscular, a un precio más inteligente y conveniente.", category: "Proteínas" },
+            { id: 4, brand: "Star Nutrition", name: "Creatina Monohidratada 300g", price: "41.900", description: "Micronizada y 100% pura. Llevá tu fuerza, resistencia y potencia explosiva al siguiente nivel.", category: "Creatinas" },
+            { id: 6, brand: "Star Nutrition", name: "Ami.Esenciales (EAA)", price: "43.200", description: "Perfil completo de los 9 aminoácidos esenciales. Bloquea el desgaste muscular y acelera tu regeneración al máximo.", category: "Aminoácidos" }
         ];
 
         // 2. RENDERIZADO DE PRODUCTOS
@@ -361,6 +373,19 @@
 
         function renderProducts(filter = 'all') {
             grid.innerHTML = ''; 
+
+            // LOGICA ESPECIAL PARA ENA
+            if (filter === 'Ena') {
+                grid.innerHTML = `
+                    <div class="col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4 flex justify-center items-center py-16" data-aos="fade-in">
+                        <div class="text-center">
+                            <i class="fa-solid fa-boxes-stacked text-4xl text-brand-primary mb-4"></i>
+                            <h3 class="text-2xl font-display font-bold text-gray-800">Próximamente se publicará el stock disponible.</h3>
+                        </div>
+                    </div>
+                `;
+                return; // Salir de la función, no renderizar tarjetas
+            }
 
             const filtered = filter === 'all' 
                 ? products 
@@ -378,7 +403,6 @@
                 const fallbackImage = `https://placehold.co/600x600/f1f5f9/0f172a?text=${encodeURIComponent(product.name)}`;
 
                 // ESTRUCTURA SWIPER (CARRUSEL)
-                // Se eliminó el overlay con el botón "Pedir Ahora"
                 card.innerHTML = `
                     <div class="relative group h-64 overflow-hidden bg-gray-100">
                         <span class="absolute top-3 left-3 bg-brand-dark text-brand-primary text-[10px] md:text-xs font-bold px-3 py-1 rounded-full z-10 uppercase tracking-wide pointer-events-none">
@@ -423,7 +447,7 @@
                         <div>
                             <div class="text-[10px] md:text-xs text-gray-500 mb-1 font-semibold uppercase tracking-wider">${product.category}</div>
                             <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2 leading-tight">${product.name}</h3>
-                            <p class="text-gray-500 text-xs md:text-sm mb-4 line-clamp-2">${product.description}</p>
+                            <p class="text-gray-500 text-xs md:text-sm mb-4">${product.description}</p>
                         </div>
                         
                         <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
